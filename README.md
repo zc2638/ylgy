@@ -40,7 +40,6 @@ docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token>'
 
 [Charles抓包教程](https://www.jianshu.com/p/ff85b3dac157)
 
-
 ### IOS
 
 前往 `App Store` 下载安装 `Stream`
@@ -50,3 +49,11 @@ docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token>'
 本项目仅供学习交流，严禁用作商业行为！  
 因他人私自不正当使用造成的违法违规行为与本人无关！  
 如有任何问题可联系本人删除！
+
+## Buy me a Coffee
+
+如果有帮助到您，并且也使您感到开心的话，可以慷慨的为我买杯coffee吗
+
+<img src="./images/alipay.jpeg" alt="alipay" width="200" />
+<br/>
+<img src="./images/wechat.jpeg" alt="wechat" width="200" />

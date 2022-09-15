@@ -34,7 +34,16 @@ docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token>'
 
 ## 抓包
 
+抓取 `cat-match.easygame2021.com` 的请求包内 Header 为 `t` 的内容
+
+### 电脑
+
 [Charles抓包教程](https://www.jianshu.com/p/ff85b3dac157)
+
+
+### IOS
+
+前往 `App Store` 下载安装 `Stream`
 
 ## 声明
 

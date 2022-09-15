@@ -12,6 +12,12 @@
 ylgy --token <your-custom-token>
 ```
 
+### Docker
+执行以下命令前，将 `<your-custom-token>` 替换为实际内容
+```shell
+docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token>' 
+```
+
 ## 抓包
 
 [Charles抓包教程](https://www.jianshu.com/p/ff85b3dac157)

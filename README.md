@@ -2,6 +2,18 @@
 
 羊了个羊 通关程序
 
+## 安装
+
+### 源码
+
+```shell
+go install github.com/zc2638/ylgy/cmd/ylgy@latest
+```
+
+### 安装包
+
+通过 [Release](https://github.com/zc2638/ylgy/releases) 页面下载
+
 ## 使用
 
 ### 命令行
@@ -13,7 +25,9 @@ ylgy --token <your-custom-token>
 ```
 
 ### Docker
+
 执行以下命令前，将 `<your-custom-token>` 替换为实际内容
+
 ```shell
 docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token>' 
 ```

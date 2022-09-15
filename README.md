@@ -2,21 +2,23 @@
 
 羊了个羊 通关程序
 
+**提醒：** 需要使用抓包软件获取`身份凭证`
+
 ## 安装
 
-### 源码
+### 一、源码
 
 ```shell
 go install github.com/zc2638/ylgy/cmd/ylgy@latest
 ```
 
-### 安装包
+### 二、安装包
 
 通过 [Release](https://github.com/zc2638/ylgy/releases) 页面下载
 
 ## 使用
 
-### 命令行
+### 一、命令行
 
 执行以下命令前，将 <your-custom-token> 替换为实际内容
 
@@ -24,7 +26,7 @@ go install github.com/zc2638/ylgy/cmd/ylgy@latest
 ylgy --token <your-custom-token>
 ```
 
-### Docker
+### 二、Docker
 
 执行以下命令前，将 `<your-custom-token>` 替换为实际内容
 
@@ -36,11 +38,11 @@ docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token>'
 
 抓取 `cat-match.easygame2021.com` 的请求包内 Header 为 `t` 的内容
 
-### 电脑
+### 一、电脑
 
 [Charles抓包教程](https://www.jianshu.com/p/ff85b3dac157)
 
-### IOS
+### 二、IOS
 
 前往 `App Store` 下载安装 `Stream`
 

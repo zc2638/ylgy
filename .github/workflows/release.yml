@@ -15,9 +15,10 @@ jobs:
           - 1.19
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Set up Go
-        uses: actions/setup-go@v3
+      - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go_version }}
 
@@ -32,54 +33,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-golang-
 
-      - name: Setup Golang with cache
-        uses: magnetikonline/action-golang-cache@v2
+      - name: GoReleaser
+        uses: goreleaser/goreleaser-action@v3
         with:
-          go-version: ${{ matrix.go_version }}
-
-      - name: Mod download
-        run: go mod download
-
-      - run: |
-          mkdir -p build
-
-      - name: Build with xgo
-        uses: TianTianBigWang/ghaction-xgo@master
-        with:
-          xgo_version: v0.1
-          go_version: ${{ matrix.go_version }}
-          pkg: cmd/ylgy
-          dest: build
-          prefix: ylgy
-          targets: windows/amd64,linux/arm64,linux/amd64,darwin/arm64,darwin/amd64
-          v: true
-          x: false
-          race: false
-          ldflags: -s -w
-          buildmode: default
-
-      - name: Move
-        run: |
-          ls ./build
-          mkdir -p release
-          mv $GITHUB_WORKSPACE/build/ylgy-darwin-10.16-amd64 release/ylgy_darwin_amd64 && chmod +x release/ylgy_darwin_amd64
-          mv $GITHUB_WORKSPACE/build/ylgy-darwin-10.16-arm64 release/ylgy_darwin_arm64 && chmod +x release/ylgy_darwin_arm64
-          mv $GITHUB_WORKSPACE/build/ylgy-linux-amd64 release/ylgy_linux_amd64 && chmod +x release/ylgy_linux_amd64
-          mv $GITHUB_WORKSPACE/build/ylgy-windows-4.0-amd64.exe release/ylgy_windows_amd64.exe
-          cd release
-          tar -zcvf ylgy_darwin_amd64.tar.gz ylgy_darwin_amd64
-          tar -zcvf ylgy_darwin_arm64.tar.gz ylgy_darwin_arm64
-          tar -zcvf ylgy_linux_amd64.tar.gz ylgy_linux_amd64
-          zip -q -r ylgy_windows_amd64.zip ylgy_windows_amd64.exe
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            release/ylgy_linux_amd64.tar.gz
-            release/ylgy_windows_amd64.zip
-            release/ylgy_darwin_amd64.tar.gz
-            release/ylgy_darwin_arm64.tar.gz
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docker-release:
     runs-on: ubuntu-latest

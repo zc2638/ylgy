@@ -1,0 +1,42 @@
+before:
+  hooks:
+    - go mod tidy
+
+gomod:
+  proxy: true
+  env:
+    - GOPROXY=https://goproxy.cn,https://goroxy.io,https://proxy.golang.org,direct
+    - GOSUMDB=sum.golang.org
+  mod: mod
+
+builds:
+  - main: cmd/ylgy
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - '386'
+      - arm64
+      - arm
+    goarm:
+      - '6'
+      - '7'
+    ignore:
+      - goos: windows
+        goarm: '6'
+
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    replacements:
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'

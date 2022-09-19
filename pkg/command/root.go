@@ -5,7 +5,9 @@ package command
 import (
 	"errors"
 	"fmt"
+	"sync"
 
+	"github.com/panjf2000/ants/v2"
 	"github.com/spf13/cobra"
 	"github.com/zc2638/ylgy/pkg/core"
 )
@@ -30,12 +32,22 @@ func NewRootCommand() *cobra.Command {
 			if opt.Times > 0 {
 				times = opt.Times
 			}
-			for i := 0; i < times; i++ {
+			var wg sync.WaitGroup
+			p, _ := ants.NewPoolWithFunc(1000, func(i interface{}) {
 				if err := core.Send(opt.Token); err != nil {
-					return err
+					fmt.Printf("[%d] 失败! 请求超时错误! \n", i)
+				} else {
+					fmt.Printf("[%d] 通关！\n", i)
 				}
-				fmt.Printf("[%d] 通关！\n", i+1)
+				wg.Done()
+			})
+			defer p.Release()
+
+			for i := 1; i <= times; i++ {
+				wg.Add(1)
+				_ = p.Invoke(i)
 			}
+			wg.Wait()
 			return nil
 		},
 	}

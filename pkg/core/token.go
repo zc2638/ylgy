@@ -9,6 +9,8 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+const tempToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1MDI0NDUsIm5iZiI6MTY2MzQwMDI0NSwiaWF0IjoxNjYzMzk4NDQ1LCJqdGkiOiJDTTpjYXRfbWF0Y2g6bHQxMjM0NTYiLCJvcGVuX2lkIjoiIiwidWlkIjo0NTk0MjYwMiwiZGVidWciOiIiLCJsYW5nIjoiIn0.1lXIcb1WL_SdsXG5N_i1drjjACRhRZUS2uadHlT6zIY"
+
 func SendByUID(uid string) error {
 	openID, err := getOpenID(uid)
 	if err != nil {
@@ -18,7 +20,7 @@ func SendByUID(uid string) error {
 	if err != nil {
 		return fmt.Errorf("get token failed: %v", err)
 	}
-	return Send(token)
+	return Send(token, uid)
 }
 
 func getOpenID(uid string) (string, error) {
@@ -35,7 +37,6 @@ func getOpenID(uid string) (string, error) {
 	}
 
 	jsonResult := gjson.Parse(resp.String())
-	fmt.Println(resp.String())
 	openid := jsonResult.Get("data.wx_open_id")
 	if jsonResult.Get("err_code").Int() != 0 || openid.String() == "" {
 		return "", fmt.Errorf("请求错误: %s", resp.String())
@@ -66,7 +67,6 @@ func getTokenByOpenID(openID string) (string, error) {
 	}
 
 	jsonResult := gjson.Parse(resp.String())
-	fmt.Println(resp.String())
 	token := jsonResult.Get("data.token")
 	if jsonResult.Get("err_code").Int() != 0 || token.String() == "" {
 		return "", fmt.Errorf("请求错误: %s", resp.String())

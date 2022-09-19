@@ -14,7 +14,6 @@ import (
 
 type Option struct {
 	UID   string
-	Token string
 	Times int
 }
 
@@ -25,8 +24,8 @@ func NewRootCommand() *cobra.Command {
 		Use:          "ylgy",
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(opt.Token) == 0 && len(opt.UID) == 0 {
-				return errors.New("token 或 uid 必须任选其一填写")
+			if len(opt.UID) == 0 {
+				return errors.New("uid 必填")
 			}
 
 			times := 1
@@ -38,22 +37,10 @@ func NewRootCommand() *cobra.Command {
 			p, err := ants.NewPoolWithFunc(1000, func(i interface{}) {
 				defer wg.Done()
 
-				var (
-					mode string
-					err  error
-				)
-				if len(opt.UID) > 0 {
-					mode = "uid"
-					err = core.SendByUID(opt.UID)
+				if err := core.SendByUID(opt.UID); err != nil {
+					fmt.Printf("[%d] 请求错误: %v \n", i, err)
 				} else {
-					mode = "token"
-					err = core.Send(opt.Token)
-				}
-
-				if err != nil {
-					fmt.Printf("[MODE=%s][%d] 失败! 请求超时错误! \n", mode, i)
-				} else {
-					fmt.Printf("[MODE=%s][%d] 通关！\n", mode, i)
+					fmt.Printf("[%d] 通关！\n", i)
 				}
 			})
 			if err != nil {
@@ -71,7 +58,6 @@ func NewRootCommand() *cobra.Command {
 	}
 
 	cmd.Flags().StringVar(&opt.UID, "uid", opt.UID, "设置uid")
-	cmd.Flags().StringVar(&opt.Token, "token", opt.Token, "设置token")
 	cmd.Flags().IntVar(&opt.Times, "times", opt.Times, "设置次数")
 	return cmd
 }

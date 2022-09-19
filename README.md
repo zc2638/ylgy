@@ -1,32 +1,48 @@
 # ylgy
 
-羊了个羊 通关程序，新版本接口已被修改，暂时使用 抓包重写 的方式通关。
+羊了个羊 通关程序，新版本接口已被修改。
 
-## 重写第二关
+支持两种方式通关：
+- 1、[重写第二关的方式](./docs/rewrite.md)
+- 2、按照以下文档步骤操作执行通关程序
 
-##### 1、通过下面的链接操作, 让`Charles`可以抓取手机请求。
+## 一、获取 UID
 
-[Charles抓包教程](https://www.jianshu.com/p/ff85b3dac157)
+- 1、登陆游戏
+- 2、点击 `俺的名片`
+- 3、查看ID
 
-##### 2、设置 Charles 重写规则
+## 二、安装
 
-##### 配置 `Location`
+### 1、源码
 
-![](./docs/images/rewrite1.png)
-
-##### 配置 `Rewrite Rule`
-
-![](./docs/images/rewrite2.png)
-
-替换的内容：
-
-```
-{"err_code":0,"err_msg":"","data":{"map_md5":["046ef1bab26e5b9bfe2473ded237b572","046ef1bab26e5b9bfe2473ded237b572"],"map_seed":[3042065807,873076577,3555997730,3291121329]}}
+```shell
+go install github.com/zc2638/ylgy/cmd/ylgy@latest
 ```
 
-##### 3、在手机上正常闯关
+### 2、安装包
 
-玩得开心！
+通过 [Release](https://github.com/zc2638/ylgy/releases) 页面下载
+
+## 三、使用
+
+### 1、命令行
+
+- 执行以下命令前，将 `<your-custom-token>` 替换为实际内容
+- `--times` 对应设置通关次数，默认为 `1`
+
+```shell
+ylgy --token <your-custom-token> --times 1
+```
+
+### 2、Docker
+
+- 执行以下命令前，将 `<your-custom-token>` 替换为实际内容
+- `--times` 对应设置通关次数，默认为 `1`
+
+```shell
+docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token> --times 1' 
+```
 
 ## 声明
 

@@ -12,8 +12,6 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-const tempToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1MDI0NDUsIm5iZiI6MTY2MzQwMDI0NSwiaWF0IjoxNjYzMzk4NDQ1LCJqdGkiOiJDTTpjYXRfbWF0Y2g6bHQxMjM0NTYiLCJvcGVuX2lkIjoiIiwidWlkIjo0NTk0MjYwMiwiZGVidWciOiIiLCJsYW5nIjoiIn0.1lXIcb1WL_SdsXG5N_i1drjjACRhRZUS2uadHlT6zIY"
-
 var client = resty.New().
 	SetBaseURL("https://cat-match.easygame2021.com").
 	SetHeader("Host", "cat-match.easygame2021.com").
@@ -21,7 +19,7 @@ var client = resty.New().
 	SetHeader("Accept-Encoding", "gzip,compress,br,deflate").
 	SetHeader("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 15_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.28(0x18001c25) NetType/WIFI Language/zh_CN")
 
-func send(url, rankRole, token string) error {
+func send(url, rankRole, uid, token string) error {
 	// 生成通关时间(s)
 	consumeTime := rand.Int63n(1000)
 	resp, err := client.R().
@@ -31,6 +29,7 @@ func send(url, rankRole, token string) error {
 		SetQueryParam("rank_time", strconv.FormatInt(consumeTime, 10)).
 		SetQueryParam("rank_role", rankRole).
 		SetQueryParam("skin", "1").
+		SetQueryParam("uid", uid).
 		SetHeader("t", token).
 		Get(url)
 
@@ -48,11 +47,11 @@ func send(url, rankRole, token string) error {
 	return nil
 }
 
-func Send(token string) error {
-	if err := send("/sheep/v1/game/game_over", "1", token); err != nil {
+func Send(token, uid string) error {
+	if err := send("/sheep/v1/game/user_rank_info", "1", uid, token); err != nil {
 		return fmt.Errorf("完成闯关失败: %v", err)
 	}
-	if err := send("/sheep/v1/game/topic_game_over", "2", token); err != nil {
+	if err := send("/sheep/v1/game/topic_game_over", "2", "", token); err != nil {
 		return fmt.Errorf("完成话题失败: %v", err)
 	}
 	return nil

@@ -8,11 +8,11 @@
 
 #### 配置 `Location`
 
-![](./docs/images/rewrite1.png)
+![](./images/rewrite1.png)
 
 #### 配置 `Rewrite Rule`
 
-![](./docs/images/rewrite2.png)
+![](./images/rewrite2.png)
 
 替换的内容：
 

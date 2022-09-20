@@ -28,20 +28,20 @@ go install github.com/zc2638/ylgy/cmd/ylgy@latest
 
 ### 1、命令行
 
-- 执行以下命令前，将 `<your-custom-token>` 替换为实际内容
+- 执行以下命令前，将 `<your-uid>` 替换为实际内容
 - `--times` 对应设置通关次数，默认为 `1`
 
 ```shell
-ylgy --token <your-custom-token> --times 1
+ylgy --uid <your-uid>
 ```
 
 ### 2、Docker
 
-- 执行以下命令前，将 `<your-custom-token>` 替换为实际内容
+- 执行以下命令前，将 `<your-uid>` 替换为实际内容
 - `--times` 对应设置通关次数，默认为 `1`
 
 ```shell
-docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token> --times 1' 
+docker run --rm -it zc2638/ylgy sh -c 'ylgy --uid <your-uid>' 
 ```
 
 ## 声明

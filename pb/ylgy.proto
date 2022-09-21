@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+message Data {
+  uint32 gameType = 1;
+  uint32 mapId = 2;
+  uint32 mapSeed = 3;
+  repeated Step stepInfoList = 4;
+}
+
+message Step {
+  uint32 chessIndex = 1;
+  uint32 timeTag = 2;
+}
+

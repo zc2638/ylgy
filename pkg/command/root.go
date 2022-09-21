@@ -13,7 +13,7 @@ import (
 )
 
 type Option struct {
-	UID   string
+	Token string
 	Times int
 }
 
@@ -24,8 +24,8 @@ func NewRootCommand() *cobra.Command {
 		Use:          "ylgy",
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(opt.UID) == 0 {
-				return errors.New("uid 必填")
+			if len(opt.Token) == 0 {
+				return errors.New("token 必填")
 			}
 
 			times := 1
@@ -33,11 +33,12 @@ func NewRootCommand() *cobra.Command {
 				times = opt.Times
 			}
 
+			engine := core.New(opt.Token)
 			var wg sync.WaitGroup
 			p, err := ants.NewPoolWithFunc(1000, func(i interface{}) {
 				defer wg.Done()
 
-				if err := core.SendByUID(opt.UID); err != nil {
+				if err := engine.Send(); err != nil {
 					fmt.Printf("[%d] 请求错误: %v \n", i, err)
 				} else {
 					fmt.Printf("[%d] 通关！\n", i)
@@ -57,7 +58,7 @@ func NewRootCommand() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVar(&opt.UID, "uid", opt.UID, "设置uid")
+	cmd.Flags().StringVar(&opt.Token, "token", opt.Token, "设置token")
 	cmd.Flags().IntVar(&opt.Times, "times", opt.Times, "设置次数")
 	return cmd
 }

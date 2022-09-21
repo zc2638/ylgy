@@ -1,48 +1,55 @@
 # ylgy
 
-羊了个羊 通关程序，新版本接口已被修改。
+羊了个羊 通关程序
 
-支持两种方式通关：
+**提醒：** 需要使用抓包软件获取`身份凭证`
 
-- 1、[重写第二关的方式](./docs/rewrite.md)
-- 2、按照以下文档步骤操作执行通关程序
+## 一、抓包
 
-## 一、获取 UID
+抓取 `cat-match.easygame2021.com` 的请求包内 Header 为 `t` 的内容
 
-- 1、登陆游戏
-- 2、点击 `俺的名片`
-- 3、查看ID
+### 1、电脑
+
+[Charles抓包教程](https://www.jianshu.com/p/ff85b3dac157)
+
+### 2、IOS
+
+[Stream 保姆级教程](./docs/stream.md)
 
 ## 二、安装
 
-### 1、源码
+### 1、安装包
+
+通过 [Release](https://github.com/zc2638/ylgy/releases) 页面下载
+
+### 2、Docker
+
+```shell
+docker pull zc2638/ylgy@latest
+```
+
+### 3、源码
 
 ```shell
 go install github.com/zc2638/ylgy/cmd/ylgy@latest
 ```
 
-### 2、安装包
-
-通过 [Release](https://github.com/zc2638/ylgy/releases) 页面下载
-
 ## 三、使用
 
 ### 1、命令行
 
-- 执行以下命令前，将 `<your-uid>` 替换为实际内容
-- `--times` 对应设置通关次数，默认为 `1`
+执行以下命令前，将 `<your-custom-token>` 替换为实际内容
 
 ```shell
-ylgy --uid <your-uid>
+ylgy --token <your-custom-token>
 ```
 
 ### 2、Docker
 
-- 执行以下命令前，将 `<your-uid>` 替换为实际内容
-- `--times` 对应设置通关次数，默认为 `1`
+执行以下命令前，将 `<your-custom-token>` 替换为实际内容
 
 ```shell
-docker run --rm -it zc2638/ylgy sh -c 'ylgy --uid <your-uid>' 
+docker run --rm -it zc2638/ylgy sh -c 'ylgy --token <your-custom-token>' 
 ```
 
 ## 声明
